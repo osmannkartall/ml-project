@@ -27,17 +27,6 @@ def sample_fake(generator, num_sample, size_latent):
   y = np.zeros((num_sample, 1))
   return X, y
 
-def plot(images):
-  num = images.shape[0]
-  plt.figure(figsize=(20, 10))
-  columns = 10
-  for i, image in enumerate(images):
-    plt.subplot(len(images) / columns + 1, columns, i + 1)
-    plt.subplots_adjust(wspace=0, hspace=0)
-    plt.axis('off')
-    plt.imshow(images[i].reshape((28,28)), cmap="gray", aspect="auto")
-  plt.show()
-
 def show_image(images):
   columns = 10
   fig = plt.figure(figsize=(columns, columns))
