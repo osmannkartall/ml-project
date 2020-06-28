@@ -23,7 +23,7 @@ def train(X, generator, discriminator, GAN, size_latent, batch=256, epoch=25):
   generator.save("gan.h5")
 
 def run():
-  size_latent = 256
+  size_latent = 128
   X, input_shape = data()
   discriminator = Discriminator(input_shape).model
   generator = Generator(size_latent, input_shape).model

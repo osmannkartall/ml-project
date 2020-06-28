@@ -31,16 +31,15 @@ class Generator:
   def create_model(self): 
     h = self.input_shape[0] // 4
     w = self.input_shape[1] // 4
-    num_low_resolution_kernel = 100
     self.model = Sequential()
-    self.model.add(Dense(num_low_resolution_kernel * h * w,
+    self.model.add(Dense(size_latent * h * w,
                          input_dim=self.size_latent))
     self.model.add(LeakyReLU(alpha=0.2))
-    self.model.add(Reshape((h, w, num_low_resolution_kernel)))
-    self.model.add(Conv2DTranspose(num_low_resolution_kernel, kernel_size=4,
+    self.model.add(Reshape((h, w, size_latent)))
+    self.model.add(Conv2DTranspose(size_latent, kernel_size=4,
                                    strides=2, padding='same'))
     self.model.add(LeakyReLU(alpha=0.2))
-    self.model.add(Conv2DTranspose(num_low_resolution_kernel, kernel_size=4,
+    self.model.add(Conv2DTranspose(size_latent, kernel_size=4,
                                    strides=2, padding='same'))
     self.model.add(LeakyReLU(alpha=0.2))
     self.model.add(Conv2D(1, (h,w), activation="tanh", padding='same'))
