@@ -19,7 +19,7 @@ class Discriminator:
     self.model.add(Flatten())
     self.model.add(Dense(1, activation="sigmoid"))
     self.model.compile(loss="binary_crossentropy", 
-                       optimizer=Adam(learning_rate=0.0008, beta_1=0.7), 
+                       optimizer=Adam(learning_rate=0.0008, beta_1=0.7, beta_2=0.99), 
                        metrics=["accuracy"])
 
 class Generator:
@@ -57,4 +57,4 @@ class GAN:
     self.model.add(self.generator)
     self.model.add(self.discriminator)
     self.model.compile(loss='binary_crossentropy',
-                       optimizer=Adam(learning_rate=0.0008, beta_1=0.7))
+                       optimizer=Adam(learning_rate=0.0008, beta_1=0.7, beta_2=0.99))
