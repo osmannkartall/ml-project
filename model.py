@@ -31,15 +31,16 @@ class Generator:
   def create_model(self): 
     h = self.input_shape[0] // 4
     w = self.input_shape[1] // 4
+    num_low_resolution_kernel = 100
     self.model = Sequential()
-    self.model.add(Dense(self.size_latent * h * w,
+    self.model.add(Dense(num_low_resolution_kernel * h * w,
                          input_dim=self.size_latent))
     self.model.add(LeakyReLU(alpha=0.2))
-    self.model.add(Reshape((h, w, self.size_latent)))
-    self.model.add(Conv2DTranspose(self.size_latent, kernel_size=4,
+    self.model.add(Reshape((h, w, num_low_resolution_kernel)))
+    self.model.add(Conv2DTranspose(num_low_resolution_kernel, kernel_size=4,
                                    strides=2, padding="same"))
     self.model.add(LeakyReLU(alpha=0.2))
-    self.model.add(Conv2DTranspose(self.size_latent, kernel_size=4,
+    self.model.add(Conv2DTranspose(num_low_resolution_kernel, kernel_size=4,
                                    strides=2, padding="same"))
     self.model.add(LeakyReLU(alpha=0.2))
     self.model.add(Conv2D(1, (h,w), activation="tanh", padding="same"))
@@ -55,5 +56,5 @@ class GAN:
     self.model = Sequential()
     self.model.add(self.generator)
     self.model.add(self.discriminator)
-    self.model.compile(optimizer=Adam(learning_rate=0.0008, beta_1=0.7, beta_2=0.99),
-                       loss="binary_crossentropy")
+    self.model.compile(loss="binary_crossentropy",
+                       optimizer=Adam(learning_rate=0.0008, beta_1=0.7, beta_2=0.99))
